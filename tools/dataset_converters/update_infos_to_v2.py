@@ -246,7 +246,7 @@ def generate_nuscenes_camera_instances(info, nusc):
     return empty_multicamera_instance
 
 
-def update_nuscenes_infos(pkl_path, out_dir):
+def update_nuscenes_infos(pkl_path, out_dir, root_path: str = './data/nuscenes'):
     camera_types = [
         'CAM_FRONT',
         'CAM_FRONT_RIGHT',
@@ -268,7 +268,7 @@ def update_nuscenes_infos(pkl_path, out_dir):
     }
     nusc = NuScenes(
         version=data_list['metadata']['version'],
-        dataroot='./data/nuscenes',
+        dataroot=root_path,
         verbose=True)
 
     print('Start updating:')
@@ -1133,7 +1133,7 @@ def parse_args():
     return args
 
 
-def update_pkl_infos(dataset, out_dir, pkl_path):
+def update_pkl_infos(dataset, out_dir, pkl_path, root_path: str):
     if dataset.lower() == 'kitti':
         update_kitti_infos(pkl_path=pkl_path, out_dir=out_dir)
     elif dataset.lower() == 'waymo':
@@ -1145,7 +1145,7 @@ def update_pkl_infos(dataset, out_dir, pkl_path):
     elif dataset.lower() == 'lyft':
         update_lyft_infos(pkl_path=pkl_path, out_dir=out_dir)
     elif dataset.lower() == 'nuscenes':
-        update_nuscenes_infos(pkl_path=pkl_path, out_dir=out_dir)
+        update_nuscenes_infos(pkl_path=pkl_path, out_dir=out_dir, root_path=root_path)
     elif dataset.lower() == 's3dis':
         update_s3dis_infos(pkl_path=pkl_path, out_dir=out_dir)
     else:
